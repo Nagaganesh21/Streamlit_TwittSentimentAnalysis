@@ -1,9 +1,10 @@
 from flask import Flask, render_template, request
 import pickle
-import re
+from pycaret.regression import *
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
 import os
+import config
 from sklearn.feature_extraction.text import TfidfVectorizer
 import scipy.sparse as sp
 
@@ -45,6 +46,7 @@ def preprocess_message(message):
     return message
 
 if __name__ == "__main__":
-    app.debug = True
-    port = int(os.environ.get("PORT", 8070))
-    app.run(host="0.0.0.0", port=port)
+    #app.debug = True
+    #port = int(os.environ.get("PORT", 8070))
+    #app.run(host="0.0.0.0", port=port)
+    app.run(host="0.0.0.0", port=config.PORT, debug=config.DEBUG_MODE)

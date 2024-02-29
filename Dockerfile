@@ -1,13 +1,18 @@
-FROM python:3.10-slim
+FROM python:3.10.4
+
+RUN pip install virtualenv
+ENV VIRTUAL_ENV=/venv
+RUN virtualenv venv -p python3
+ENV PATH="VIRTUAL_ENV/bin:$PATH"
 
 WORKDIR /app
-
 ADD . /app
 
-RUN apt-get update && apt-get install -y libgomp1
+# Install dependencies
+RUN pip install -r requirements.txt
 
-RUN pip install --trusted-host pypi.python.org -r requirements.txt
+# Expose port
+ENV PORT 8089
 
-ENTRYPOINT ["python"]
-
-CMD ["/app/app.py"]
+# Run the application:
+CMD ["gunicorn", "app:app", "--config=config.py"]
