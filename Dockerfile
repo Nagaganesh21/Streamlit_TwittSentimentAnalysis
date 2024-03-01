@@ -1,19 +1,27 @@
-FROM python:3.10.4
+FROM python:3.10
 
+# Set working directory
+WORKDIR /app
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y build-essential && rm -rf /var/lib/apt/lists/*
+
+# Upgrade pip
 RUN pip install --upgrade pip
 
-WORKDIR /app
-COPY . /app
+# Install Python dependencies
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
 
-# Install dependencies
-RUN pip install -r requirements.txt
-
+# Download NLTK data
 RUN python -m nltk.downloader punkt
 
+# Copy application code
+COPY . .
+
 # Expose port
-ENV PORT 8089
+EXPOSE 8089
 
+# Define entrypoint and default command
 ENTRYPOINT ["python"]
-
-# Run the application:
 CMD ["gunicorn", "app:app", "--config=config.py"]
