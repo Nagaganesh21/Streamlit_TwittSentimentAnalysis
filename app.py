@@ -1,12 +1,16 @@
 from flask import Flask, render_template, request
 import pickle
 from pycaret.regression import *
-from nltk.corpus import stopwords
+import nltk
+from nltk.corpus import stopwords  # Added import for stopwords
 from nltk.stem import WordNetLemmatizer
 import os
 import config
 from sklearn.feature_extraction.text import TfidfVectorizer
 import scipy.sparse as sp
+
+# Download NLTK resources
+nltk.download('stopwords')
 
 # Load the TF-IDF vectorizer
 tfidf = pickle.load(open("tfidf_vectorizer.pkl", 'rb'))
