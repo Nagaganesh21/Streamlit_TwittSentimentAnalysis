@@ -6,6 +6,7 @@ from nltk.stem import WordNetLemmatizer
 
 # Download NLTK resources
 nltk.download('stopwords')
+nltk.download('wordnet')
 
 # Load the TF-IDF vectorizer
 with open("tfidf_vectorizer.pkl", 'rb') as f:
