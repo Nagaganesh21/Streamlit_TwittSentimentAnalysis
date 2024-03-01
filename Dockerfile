@@ -20,7 +20,7 @@ RUN python -m nltk.downloader punkt
 COPY . .
 
 # Expose port
-EXPOSE 8089
+EXPOSE 8080
 
 # Define entrypoint and default command
 ENTRYPOINT ["python"]
